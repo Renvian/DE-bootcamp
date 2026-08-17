@@ -19,7 +19,7 @@ def round_play(round, players_deck, players_win):
         card_index = random.randrange(len(players_deck[player]))
         card = players_deck[player].pop(card_index)
         print(f"{player} :",end = " ")
-        #time.sleep(1)
+        time.sleep(1)
         print(f"{card}")
     print("\n")
     while True:
@@ -27,35 +27,38 @@ def round_play(round, players_deck, players_win):
         winner = "Player " + winner_no
         if winner in players_deck:
             players_win[winner] += 1
-            print(f"Congratulations {winner}!! for winning {round + 1}\n")
-            #time.sleep(1.5)
+            print(f"Congratulations {winner}!! for winning round {round + 1}\n")
+            time.sleep(1.5)
             break
         else:
             print("Enter valid player number")
-        
-       
+
+
+#Welcome Message
+print("WELCOME TO THE GAME OF CARDS!!")
+print("-" * 25,"\n")
+
 # Deck creation
 suits = ["Spades", "Clubs", "Hearts", "Diamonds"]
 ranks = ["Ace","2","3","4","5","6","7","8","9","10","King","Queen","Jack"]
 deck = [suit + " " + rank for suit in suits for rank in ranks]
-print(len(deck))
 
 # Shuffling the deck
 random.shuffle(deck)
-print(prime_factors(len(deck)))
+
 # Input for number of players
 while True:
     try:
         no_of_players = int(input("Enter the number of players: "))
-        print("\n")
         if no_of_players in prime_factors(len(deck)):
+            print("\n")
             break
         else:
             print("Enter valid no of players")
-            
+
     except ValueError:
         print("Please enter a valid input")
-        
+
 
 # Initializing players
 players_deck = {"Player " + f"{i + 1}" : [] for i in range(no_of_players)}
@@ -70,8 +73,32 @@ for round in range(int(rounds)):
     round_play(round, players_deck, players_win)
 
 
-#Selection sort
-    
+# Results
+max_score = 0
+max_scorers = []
+
+for player in players_win:
+	if players_win[player] > max_score:
+		max_scorers.clear()
+		max_score = players_win[player]
+		max_scorers.append(player)
+	elif players_win[player] == max_score:
+		max_scorers.append(player)
 
 
+print("Results: \n")
+for player in players_win:
+	print(f"{player} : {players_win[player]}")
 
+print("\n")
+	
+if len(max_scorers) > 1:
+			print("The winners are: ")
+			for winner in max_scorers:
+				print(winner)
+else:
+			print("The winner is: ")
+			print(max_scorers[0])
+			
+	
+			
